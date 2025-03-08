@@ -2,7 +2,7 @@
   "name": "login-page",
   "version": "0.0.0",
   "description": "this login page is created by hadi and shayan for payment and stuff",
-  "main": "Back/index.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
