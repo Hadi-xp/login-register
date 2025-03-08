@@ -9,6 +9,7 @@
   "author": "hadixp & shayan",
   "license": "ISC",
   "dependencies": {
+    "config": "^3.3.12",
     "express": "^4.21.2"
   }
 }
