@@ -16,13 +16,11 @@ userRouter.post('/postUser',(req,res)=>{
 // Put API
 userRouter.put('/putUser',(req,res)=>{
     res.json({mag:'putting Users'})
-
 })
 
 // Delete API
 userRouter.delete('/deleteUser',(req,res)=>{
     res.json({mag:'deleting Users'})
-
 })
 
 
