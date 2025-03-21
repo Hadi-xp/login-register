@@ -1,6 +1,7 @@
 const express = require('express');
 const userRouter = express.Router();
 const userSchema = require('../schema/schema');
+const User = require('../schema/schema');
 
 
 
@@ -10,8 +11,16 @@ userRouter.get('/getUser',(req,res)=>{
 })
 
 // Post API
-userRouter.post('/postUser',(req,res)=>{
-    res.json({mag:'posting Users'})
+userRouter.post('/postUser',async (req,res)=>{
+    let newUser = new User({
+        Name:req.body.Name,
+        Email:req.body.Email,
+    })
+    newUser = await newUser.save();
+    res.json({
+        data:newUser,
+        msg:'user saved'
+    })
 })
 
 // Put API
