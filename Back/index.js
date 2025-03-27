@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/newLogin')
 .then(()=>{console.log('connected to data base');})
@@ -8,6 +9,8 @@ app.use(express.json());
 const config = require('config');
 const {body,validationResault} = require('express-validator');
 const userRouter = require('./Routs/userRout')
+app.use(cors()); // Enable CORS for all routes
+
 
 
 
