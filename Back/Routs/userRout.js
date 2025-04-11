@@ -15,6 +15,7 @@ userRouter.post('/postUser',async (req,res)=>{
     let newUser = new User({
         Name:req.body.Name,
         Email:req.body.Email,
+        Password:req.body.Password
     })
     newUser = await newUser.save();
     res.json({
