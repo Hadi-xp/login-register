@@ -1,6 +1,5 @@
-const express = require('express');
-const {body,validationResault, ExpressValidator} = require('express-validator');
-const check = ExpressValidator.check;
+const expressValidator = require("express-validator");
+const check = expressValidator.check;
 
 
 module.exports = new class {
