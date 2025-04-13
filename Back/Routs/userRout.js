@@ -1,5 +1,6 @@
 const express = require('express');
 const userRouter = express.Router();
+const validate = require('../auth/authentication');
 // const userSchema = require('../schema/schema');
 const User = require('../schema/schema');
 
@@ -11,7 +12,7 @@ userRouter.get('/getUser',(req,res)=>{
 })
 
 // Post API
-userRouter.post('/postUser',async (req,res)=>{
+userRouter.post('/postUser',validate.registerValidation(),async (req,res)=>{
     let newUser = new User({
         Name:req.body.Name,
         Email:req.body.Email,
