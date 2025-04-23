@@ -14,7 +14,7 @@ userRouter.get('/getUser',(req,res)=>{
 
 // Post API
 userRouter.post('/postUser',[
-    body('Email','email must be valid').isEmail().isEmpty(),
+    body('Email','email must be valid').isEmail().notEmpty(),
     body('Name','name cant be empty').notEmpty(),
     body('Password','password cant be empty').notEmpty()
 ],async (req,res)=>{
