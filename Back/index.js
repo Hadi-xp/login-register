@@ -15,7 +15,7 @@ app.use(cors()); // Enable CORS for all routes
 
 
 
-app.use('/login',userRouter);
+app.use('/register',userRouter);
 
 
 
