@@ -31,7 +31,7 @@ userRouter.post('/postUser',[
     newUser = await newUser.save();
     res.json({
         data:newUser,
-        msg:'user saved'
+        msg:'user saved successfully'
     })
 })
 
