@@ -22,7 +22,7 @@ userRouter.get('/getAllUser',async(req,res)=>{
 // Get 1 User API by Name
 userRouter.get('/getUser/:Name',async(req,res)=>{
     const user = await User.findOne({Name:req.params.Name});
-    if(!user) return res.json({data:null,msg:'user not found'})
+    if(!user) return res.status(404).json({data:null,msg:'user not found'})
     res.json({data:user,mag:'user is here'});
 })
 
@@ -50,13 +50,25 @@ userRouter.post('/postUser',[
 })
 
 // Put API
-userRouter.put('/putUser',(req,res)=>{
-    res.json({mag:'putting Users'})
+userRouter.put('/putUser/:Name',async(req,res)=>{
+    const user = await User.findOneAndUpdate({Name:req.params.Name},{
+        Name:req.body.Name,
+        Email:req.body.Email,
+        Password:req.body.Password
+    },{new:true});
+    if(!user){
+        return res.status(404).json({data:null,mag:'user not found'})
+    }
+    res.json(user)
+    
+    
 })
 
 // Delete API
-userRouter.delete('/deleteUser',(req,res)=>{
-    res.json({mag:'deleting Users'})
+userRouter.delete('/deleteUser/:Name',async(req,res)=>{
+    const user = await User.findOneAndDelete({Name:req.params.Name})
+    if(!user) return res.status(404).json({data:null,msg:'user not found'})
+    res.json(user)
 })
 
 
