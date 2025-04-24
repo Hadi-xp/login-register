@@ -7,9 +7,23 @@ const {body,validationResult} = require('express-validator');
 
 
 
-// Get API
-userRouter.get('/getUser',(req,res)=>{
-    res.json({msg:'getting Users'})
+// Get All Users API
+userRouter.get('/getAllUser',async(req,res)=>{
+    const allUsers = await User.find();
+    res.json({
+        data:allUsers,
+        msg:'all Users are here'
+    })
+})
+
+
+
+
+// Get 1 User API by Name
+userRouter.get('/getUser/:Name',async(req,res)=>{
+    const user = await User.findOne({Name:req.params.Name});
+    if(!user) return res.json({data:null,msg:'user not found'})
+    res.json({data:user,mag:'user is here'});
 })
 
 // Post API
