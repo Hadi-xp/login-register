@@ -1,7 +1,5 @@
 const express = require('express');
 const userRouter = express.Router();
-// const validate = require('../auth/authentication');
-// const userSchema = require('../schema/schema');
 const User = require('../schema/schema');
 const {body,validationResult} = require('express-validator');
 
