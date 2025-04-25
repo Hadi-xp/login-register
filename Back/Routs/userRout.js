@@ -35,6 +35,10 @@ userRouter.post('/postUser',[
         return res.status(404).json({data:null,errors:errors.array()})
 
     }
+    const existUser = await User.findOne({Email:req.body.Email});
+    if(existUser){
+        return res.status(404).json({data:null,msg:'this Email has beed taken'})
+    }
     let newUser = new User({
         Name:req.body.Name,
         Email:req.body.Email,
