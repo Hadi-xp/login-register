@@ -7,9 +7,8 @@ mongoose.connect('mongodb://localhost:27017/newLogin')
 .catch(()=>{console.log('not connected');})
 app.use(express.json());
 const config = require('config');
-const {body,validationResault} = require('express-validator');
 const userRouter = require('./Routs/userRout')
-app.use(cors()); // Enable CORS for all routes
+app.use(cors()); // enable CORS for all routes
 
 
 
