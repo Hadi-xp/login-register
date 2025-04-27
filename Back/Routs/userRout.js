@@ -53,7 +53,7 @@ userRouter.post('/postUser',[
     const existUser = await User.findOne({Email:req.body.Email});
     if(existUser){
         // if there was an Email we res an object with null value and msg as error msg
-        return res.status(404).json({data:null,msg:'this Email has beed taken'})
+        return res.status(404).json({data:null,msg:'This email has already been used'})
     }
     // but here if the all auth parts passd here we save our user
     // make a variable and name it newUser then we use our scheama model to save user datas
