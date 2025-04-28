@@ -57,7 +57,7 @@ userRouter.post('/postUser',[
         return res.status(404).json({data:null,msg:'This email has already been used'})
     }
     // but here if the all auth parts passd here we save our user
-    // make a variable and name it newUser then we use our scheama model to save user datas
+    // make a variable and name it newUser then we use our scheama model to save user data using lodash to pick data
     let newUser = new User(
         _.pick(req.body,['Name','Email','Password'])
     )
@@ -72,8 +72,9 @@ userRouter.post('/postUser',[
 
 // Put API (this API is for changing user data ad saving them again i used parameters again to find the user)
 userRouter.put('/putUser/:Name',async(req,res)=>{
-    // we used findOneAndUpdate to change all datas
+    // making an updateData and use lodash to collect new data from user in body req
     const updatedData = _.pick(req.body,['Name','Email','Password']);
+    // we used findOneAndUpdate to change all datas
     const user = await User.findOneAndUpdate({Name:req.params.Name},
         updatedData
     ,{new:true});
@@ -81,6 +82,7 @@ userRouter.put('/putUser/:Name',async(req,res)=>{
     if(!user){
         return res.status(404).json({data:null,mag:'user not found'})
     }
+    // at last we send user data but not the password
     res.json({data:_.pick(user,['Name','Email','_id','isAdmin','Balance'])})
     
     
