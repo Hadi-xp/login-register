@@ -65,7 +65,7 @@ userRouter.post('/postUser',[
     newUser = await newUser.save();
     // i wanted to see what user saved so i res an object with user data in it
     res.json({
-        data:_.pick(newUser,['Name','Email','_id']),
+        data:_.pick(newUser,['Name','Email','_id','isAdmin','Balance']),
         msg:'user saved successfully'
     })
 })
@@ -73,16 +73,15 @@ userRouter.post('/postUser',[
 // Put API (this API is for changing user data ad saving them again i used parameters again to find the user)
 userRouter.put('/putUser/:Name',async(req,res)=>{
     // we used findOneAndUpdate to change all datas
-    const user = await User.findOneAndUpdate({Name:req.params.Name},{
-        Name:req.body.Name,
-        Email:req.body.Email,
-        Password:req.body.Password
-    },{new:true});
+    const updatedData = _.pick(req.body,['Name','Email','Password']);
+    const user = await User.findOneAndUpdate({Name:req.params.Name},
+        updatedData
+    ,{new:true});
     // again here if the user was not in DB we return status 404 and null value
     if(!user){
         return res.status(404).json({data:null,mag:'user not found'})
     }
-    res.json(user)
+    res.json({data:_.pick(user,['Name','Email','_id','isAdmin','Balance'])})
     
     
 })
