@@ -81,6 +81,8 @@ userRouter.post('/postUser',[
 userRouter.put('/putUser/:Name',async(req,res)=>{
     // making an updateData and use lodash to collect new data from user in body req
     const updatedData = _.pick(req.body,['Name','Email','Password']);
+    const salt = await bcrypt.genSalt(10);
+    updatedData.Password = await bcrypt.hash(updatedData.Password,salt)
     // we used findOneAndUpdate to change all datas
     const user = await User.findOneAndUpdate({Name:req.params.Name},
         updatedData
@@ -90,7 +92,7 @@ userRouter.put('/putUser/:Name',async(req,res)=>{
         return res.status(404).json({data:null,mag:'user not found'})
     }
     // at last we send user data but not the password
-    res.json({data:_.pick(user,['Name','Email','_id','isAdmin','Balance'])})
+    res.json({data:_.pick(user,['Name','Email','_id','isAdmin','Balance']),msg:'data changed'});
     
     
 })
