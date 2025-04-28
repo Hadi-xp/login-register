@@ -1,0 +1,4 @@
+1 => login page
+2 => register page
+3 => user pamel 
+4 => Admin panel 
