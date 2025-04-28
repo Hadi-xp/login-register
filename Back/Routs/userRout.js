@@ -65,7 +65,7 @@ userRouter.post('/postUser',[
     newUser = await newUser.save();
     // i wanted to see what user saved so i res an object with user data in it
     res.json({
-        data:newUser,
+        data:_.pick(newUser,['Name','Email','_id']),
         msg:'user saved successfully'
     })
 })
