@@ -8,6 +8,8 @@ const User = require('../schema/schema');
 const _ = require('lodash');
 // bcrypt for changing user password to unknown string
 const bcrypt = require('bcrypt');
+const logger = require('./logger');
+
 
 
 
@@ -33,6 +35,7 @@ userRouter.get('/getUser/:Email',async(req,res)=>{
     const isValid = await bcrypt.compare(req.body.Password,user.Password);
     if(!isValid) return res.json({data:null,msg:'password is wrong'})
     // if the user found it returns as object with a msg 
+    logger.info(`User retrived: ${user.Name}`)
     res.json({data:_.pick(user,['Name','Email','_id']),mag:'user is here'});
 })
 
@@ -70,6 +73,7 @@ userRouter.post('/postUser',[
     newUser.Password = await bcrypt.hash(newUser.Password,salt)
     // here we use save() to storing user data in DB
     newUser = await newUser.save();
+    logger.info(`User created: ${newUser.Name}`)
     // i wanted to see what user saved so i res an object with user data in it
     res.json({
         data:_.pick(newUser,['Name','Email','_id','isAdmin','Balance']),
@@ -91,6 +95,7 @@ userRouter.put('/putUser/:Name',async(req,res)=>{
     if(!user){
         return res.status(404).json({data:null,mag:'user not found'})
     }
+    logger.info(`User updated: ${user.Name}`)
     // at last we send user data but not the password
     res.json({data:_.pick(user,['Name','Email','_id','isAdmin','Balance']),msg:'data changed'});
     
@@ -103,6 +108,7 @@ userRouter.delete('/deleteUser/:Name',async(req,res)=>{
     const user = await User.findOneAndDelete({Name:req.params.Name})
     //again if the user was not found return that object with null value and error msg again
     if(!user) return res.status(404).json({data:null,msg:'user not found'})
+    logger.info(`User deleted ${user.Name}`)
     res.json(user)
 })
 
