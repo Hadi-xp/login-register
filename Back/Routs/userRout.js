@@ -4,6 +4,7 @@ const userRouter = express.Router();
 const {body,validationResult} = require('express-validator');
 // from User scheama
 const User = require('../schema/schema');
+const _ = require('lodash');
 
 
 
@@ -57,11 +58,9 @@ userRouter.post('/postUser',[
     }
     // but here if the all auth parts passd here we save our user
     // make a variable and name it newUser then we use our scheama model to save user datas
-    let newUser = new User({
-        Name:req.body.Name,
-        Email:req.body.Email,
-        Password:req.body.Password
-    })
+    let newUser = new User(
+        _.pick(req.body,['Name','Email','Password'])
+    )
     // here we use save() to storing user data in DB
     newUser = await newUser.save();
     // i wanted to see what user saved so i res an object with user data in it
