@@ -5,6 +5,7 @@ const {body,validationResult} = require('express-validator');
 // from User scheama
 const User = require('../schema/schema');
 const _ = require('lodash');
+const bcrypt = require('bcrypt');
 
 
 
@@ -23,13 +24,14 @@ userRouter.get('/getAllUser',async(req,res)=>{
 
 
 // Get 1 User API by Name (this API will show only 1 user that we chose from parameter)
-userRouter.get('/getUser/:Name',async(req,res)=>{
-    // making a const for user with findOne methid that search for 1 user and Name parameter that we take it from req
-    const user = await User.findOne({Name:req.params.Name});
-    // this is the part that checks if there is any user with this name or not 
-    if(!user) return res.status(404).json({data:null,msg:'user not found'})
-        // if the user found it returns as object with a msg 
-    res.json({data:user,mag:'user is here'});
+userRouter.get('/getUser/:Email',async(req,res)=>{
+    // making a const for user with findOne methid that search for 1 user and Email parameter that we take it from req
+    const user = await User.findOne({Email:req.params.Email});
+    // this is the part that checks if the password is correct or not
+    const isValid = await bcrypt.compare(req.body.Password,user.Password);
+    if(!isValid) return res.json({data:null,msg:'password is wrong'})
+    // if the user found it returns as object with a msg 
+    res.json({data:_.pick(user,['Name','Email','_id']),mag:'user is here'});
 })
 
 // Post API (this API is for saving user in DB)
@@ -61,6 +63,9 @@ userRouter.post('/postUser',[
     let newUser = new User(
         _.pick(req.body,['Name','Email','Password'])
     )
+    // using bcrypt for user password to be unknowed in DB
+    const salt = await bcrypt.genSalt(10);
+    newUser.Password = await bcrypt.hash(newUser.Password,salt)
     // here we use save() to storing user data in DB
     newUser = await newUser.save();
     // i wanted to see what user saved so i res an object with user data in it
