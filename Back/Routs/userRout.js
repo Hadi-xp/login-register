@@ -4,7 +4,9 @@ const userRouter = express.Router();
 const {body,validationResult} = require('express-validator');
 // from User scheama
 const User = require('../schema/schema');
+// lodash for collecting data from req better
 const _ = require('lodash');
+// bcrypt for changing user password to unknown string 
 const bcrypt = require('bcrypt');
 
 
