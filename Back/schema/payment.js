@@ -8,4 +8,4 @@ const paymentSchema = new Schema({
     payment:{type:Boolean, default:false}
 })
 paymentSchema.plugin(timestamp);
-
+module.exports = mongoose.model('Payment',paymentSchema);
