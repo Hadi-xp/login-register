@@ -118,7 +118,7 @@ userRouter.post('/pay',async(req,res)=>{
     let params = {
         mercahnt_id:'6cded376-3063-11e9-a98e-005056a205be',
         amount:req.body.amount,
-        callback_url:'http://localhost:5000/callback',
+        callback_url:'http://localhost:5000/register/callback',
         description:'افزایش حساب',
         metadata:{email:req.body.email,mobile:req.body.mobile}
     }
@@ -128,7 +128,6 @@ userRouter.post('/pay',async(req,res)=>{
 
 
 userRouter.get('/callback',(req,res)=>{
-    res.status(300).json({data:'callBackTest'})
     console.log('callback');
 })
 
