@@ -6,6 +6,7 @@ mongoose.connect('mongodb://localhost:27017/newLogin')
 .then(()=>{console.log('connected to data base');})
 .catch(()=>{console.log('not connected');})
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 const config = require('config');
 const userRouter = require('./Routs/userRout')
 app.use(cors()); // enable CORS for all routes

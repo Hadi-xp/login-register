@@ -76,10 +76,8 @@ userRouter.post('/postUser',[
     newUser = await newUser.save();
     logger.info(`User created: ${newUser.Name}`)
     // i wanted to see what user saved so i res an object with user data in it
-    res.json({
-        data:_.pick(newUser,['Name','Email','_id','isAdmin','Balance']),
-        msg:'user saved successfully'
-    })
+    res.json({data:newUser,msg:'user saved'});
+    
 })
 
 // Put API (this API is for changing user data ad saving them again i used parameters again to find the user)
@@ -130,6 +128,8 @@ userRouter.post('/pay',async(req,res)=>{
 userRouter.get('/callback',(req,res)=>{
     console.log('callback');
 })
+
+
 
 
 
