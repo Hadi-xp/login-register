@@ -113,6 +113,17 @@ userRouter.delete('/deleteUser/:Name',async(req,res)=>{
 })
 
 
+userRouter.post('/pay',(req,res)=>{
+    res.status(300).json({data:'payment'});
+})
+
+
+userRouter.get('/callback',(req,res)=>{
+    res.status(300).json({data:'callBackTest'})
+    console.log('callback');
+})
+
+
 
 // exportig this routs to index file
 module.exports = userRouter
