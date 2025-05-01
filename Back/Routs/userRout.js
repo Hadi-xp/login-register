@@ -114,14 +114,16 @@ userRouter.delete('/deleteUser/:Name',async(req,res)=>{
 })
 
 
-userRouter.post('/pay',(req,res)=>{
+userRouter.post('/pay',async(req,res)=>{
     let params = {
         mercahnt_id:'6cded376-3063-11e9-a98e-005056a205be',
         amount:req.body.amount,
         callback_url:'http://localhost:5000/callback',
         description:'افزایش حساب',
-        metadata:[email=req.body.email,mobile=req.body.mobile]
+        metadata:{email:req.body.email,mobile:req.body.mobile}
     }
+    const response = await axios.post('https://api.zarinpal.com/pg/v4/payment/request.json',params);
+    console.log(response);
 })
 
 
