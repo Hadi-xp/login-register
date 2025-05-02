@@ -10,6 +10,13 @@ form.addEventListener('submit',async(e)=>{
         method:'POST',
         body:JSON.stringify({Email,Password})
     })
+    if(res.ok){
+        const {token} = await res.json();
+        localStorage.setItem('token',token);
+        window.location.href = 'userPanel.html';
+    }else{
+        alert('login failed');
+    }
 
    
 

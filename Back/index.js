@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/newLogin')
 .then(()=>{console.log('connected to data base');})
@@ -20,7 +19,7 @@ app.use(express.static('public'));
 app.use('/register',userRouter);
 
 app.get('/Welcome',(req,res)=>{
-    res.send('Welcome user')
+    res.json({data:'its ok'})
 })
 
 

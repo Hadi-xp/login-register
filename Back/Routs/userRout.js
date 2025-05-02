@@ -47,7 +47,7 @@ userRouter.post('/getUser',async(req,res)=>{
     logger.info(`User retrived: ${user.Name}`)
     // creating token
     const token = jwt.sign({userID:user._id},_config.get('jwt'),{expiresIn:'1h'});
-    res.json({data:{token},mag:'user is here'});
+    res.json({data:{token},msg:'user is here'});
 })
 
 // Post API (this API is for saving user in DB)
@@ -86,7 +86,7 @@ userRouter.post('/postUser',[
     newUser = await newUser.save();
     logger.info(`User created: ${newUser.Name}`)
     // i wanted to see what user saved so i res an object with user data in it
-    res.sendFile(path.join(__dirname, 'public', 'userPanel.html'));
+    res.json({data:newUser,msg:'user saved'});
     
 })
 
