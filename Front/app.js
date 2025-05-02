@@ -11,8 +11,6 @@ form.addEventListener('submit',async(e)=>{
         body:JSON.stringify({Email,Password})
     })
 
-    if(res.ok){
-        window.location.href = '/index.html'
-    }
+   
 
 })
