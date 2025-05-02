@@ -13,6 +13,7 @@ const axios = require('axios');
 const jwt = require('jsonwebtoken');
 const { config } = require('winston');
 const _config = require('config');
+const path = require('path');
 
 
 
@@ -85,7 +86,7 @@ userRouter.post('/postUser',[
     newUser = await newUser.save();
     logger.info(`User created: ${newUser.Name}`)
     // i wanted to see what user saved so i res an object with user data in it
-    res.json({data:newUser,msg:'user saved'});
+    res.sendFile(path.join(__dirname, 'public', 'userPanel.html'));
     
 })
 
@@ -134,9 +135,7 @@ userRouter.post('/pay',async(req,res)=>{
 })
 
 
-userRouter.get('/callback',(req,res)=>{
-    console.log('callback');
-})
+
 
 
 
