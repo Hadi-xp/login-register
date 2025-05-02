@@ -10,6 +10,9 @@ const _ = require('lodash');
 const bcrypt = require('bcrypt');
 const logger = require('./logger');
 const axios = require('axios');
+const jwt = require('jsonwebtoken');
+const { config } = require('winston');
+const _config = require('config');
 
 
 
@@ -32,12 +35,18 @@ userRouter.get('/getAllUser',async(req,res)=>{
 userRouter.get('/getUser/:Email',async(req,res)=>{
     // making a const for user with findOne methid that search for 1 user and Email parameter that we take it from req
     const user = await User.findOne({Email:req.params.Email});
+    if(!user){
+        return res.json({data:null,msg:'user not found'});
+    }
     // this is the part that checks if the password is correct or not
     const isValid = await bcrypt.compare(req.body.Password,user.Password);
     if(!isValid) return res.json({data:null,msg:'password is wrong'})
-    // if the user found it returns as object with a msg 
+    
+        // if the user found it returns as object with a msg 
     logger.info(`User retrived: ${user.Name}`)
-    res.json({data:_.pick(user,['Name','Email','_id']),mag:'user is here'});
+    // creating token
+    const token = jwt.sign({userID:user._id},_config.get('jwt'),{expiresIn:'1h'});
+    res.json({data:{token},mag:'user is here'});
 })
 
 // Post API (this API is for saving user in DB)
