@@ -32,9 +32,9 @@ userRouter.get('/getAllUser',async(req,res)=>{
 
 
 // Get 1 User API by Name (this API will show only 1 user that we chose from parameter)
-userRouter.get('/getUser/:Email',async(req,res)=>{
+userRouter.post('/getUser',async(req,res)=>{
     // making a const for user with findOne methid that search for 1 user and Email parameter that we take it from req
-    const user = await User.findOne({Email:req.params.Email});
+    const user = await User.findOne({Email:req.body.Email});
     if(!user){
         return res.json({data:null,msg:'user not found'});
     }
