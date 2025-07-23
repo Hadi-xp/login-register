@@ -9,6 +9,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const config = require('config');
 const userRouter = require('./Routs/userRout')
+const reactRouter = require('./Routs/reactApi')
 app.use(cors()); // enable CORS for all routes
 app.use(express.static('public'));
 
@@ -17,6 +18,7 @@ app.use(express.static('public'));
 
 
 app.use('/register',userRouter);
+app.use('/reactAPI',reactRouter);
 
 app.get('/Welcome',(req,res)=>{
     res.json({data:'its ok'})
